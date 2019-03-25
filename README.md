@@ -11,7 +11,7 @@ Noah
 ### TODO list: add below :octocat:
 
 > - [x] meet up during spring break
-> - [ ] script download 'track' files
+> - [x] script download 'track' files
 > - [ ] create object handling the data
 > - [ ] create a map of the area
 > - [ ] hurricane picture 
