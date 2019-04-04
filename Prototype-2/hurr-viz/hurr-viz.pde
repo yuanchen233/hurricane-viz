@@ -7,6 +7,10 @@ boolean lerpit = true;
 int last;
 int factor = 5;
 
+class Hurricane {
+  public Table track;
+
+}
 
 void setup() {
   size(256,360, P3D);  // Use the P3D renderer for 3D graphics
@@ -16,7 +20,7 @@ void setup() {
   // load in .csv files
   albert.track = loadTable("Alberto2018Data.csv", "header"); 
 
-  // TODO: create object based on paras
+
   albert.track.removeRow(0);
   albert.track.removeRow(0);
   track_points = new PVector[albert.track.getRowCount()];
@@ -37,8 +41,8 @@ println(track_points[0].x,track_points[0].y);
 println(track_points[last].x,track_points[last].y);
 
   for (int i = 0; i < last; i++){
-	if (track_points[i] != null) {
-    //println(track_points[i].x,track_points[i].y);
+      if (track_points[i] != null) {
+      //println(track_points[i].x,track_points[i].y);
       point(track_points[i].x * factor,track_points[i].y * factor - 200);
   }
   }
