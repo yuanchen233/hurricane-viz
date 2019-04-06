@@ -14,7 +14,7 @@ void setup() {
   Hurricane albert = new Hurricane();
   
   // load in .csv files
-  albert.track = loadTable("Alberto2018Data.csv", "header"); 
+  albert.track = loadTable("HurricaneData/2014/ArthurData2014.csv", "header"); 
 
   // TODO: create object based on paras
   albert.track.removeRow(0);
