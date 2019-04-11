@@ -1,6 +1,7 @@
 
 public class Hurricane {
 
+  public PVector[] points;
   
   private Table track;
   
