@@ -15,6 +15,8 @@ String[] filenames;
 Hurricane[] hurs = new Hurricane[8];
 String path;
 GeoMap geoMap;
+float xo,yo;
+float zoom = 2;
 
 // Temp values;
 //String str;
@@ -27,6 +29,8 @@ void settings() {
 
 
 void setup() {
+
+  
   
   myFont1 = createFont("Georgia", 22);
   
@@ -39,10 +43,19 @@ void setup() {
   
   }
 
+
   // ================== Set up Map ========================
   
   geoMap = new GeoMap(this);  // Create the geoMap object.
+  //geoMap = new GeoMap(-2500,-1500,1600*7,800*7,this);
   geoMap.readFile("world");   // Read shapefile.
+  
+  //================== zoom in/out ========================
+ xo = 0;
+  yo = 0;
+  smooth();
+  noStroke();
+  
   
   // ================== Read File ========================
   
@@ -100,6 +113,24 @@ void draw() {
   
   background(0);  // Ocean colour
   
+    // ================== Draw Panel ========================
+  strokeWeight(1.0);
+  noStroke();
+  fill(250,250,250,75);
+  rect(25, 400, width/6, height/3,18,18,18,18);
+  
+  fill(250,250,250,95);
+  textFont(myFont1);
+  textAlign(CENTER, CENTER);
+  text("Hurricane Info", width/10, height/2.5+height/8);
+  textFont(myFont2);
+  text("Albert", width/10, height/2.5+height/8*1.5);
+  text("2014/03 - 2014 - 08", width/10, height/2.5+height/8*2);
+  text("Damage: $999", width/10, height/2.5+height/8*2.5);
+    //==================zoom ========================
+  translate(xo,yo);
+  scale(zoom);
+  
   // ================== Draw Map ========================
 
   stroke(220);              // Boundary colour
@@ -115,6 +146,9 @@ void draw() {
     fill(100);      // Highlighted land colour.
     geoMap.draw(id);
   }
+  
+
+  
 
 
   // ================== Draw Hurr ========================
@@ -198,4 +232,22 @@ text("Cristobal", 75,290);
 
 
 
+
+
+}
+
+void keyPressed(){
+  if (key == CODED){
+    if (keyCode == UP){
+      zoom += .03;
+    }else if (keyCode == DOWN){
+      zoom -= .03;
+    }
+    
+    if (key == ' '){
+      xo = 0;
+      yo = 0;
+      zoom = 2;
+    }
+  }
 }
