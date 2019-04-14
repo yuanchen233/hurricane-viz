@@ -4,8 +4,6 @@ import org.gicentre.geomap.*;
 
 PFont myFont1;
 PFont myFont2;
-PFont myFont3;
-PFont myFont4;
 int displayMode = 1;
 float lerpAmount = 0;
 boolean lerpit = true;
@@ -28,11 +26,11 @@ void settings() {
 
 void setup() {
   
-  myFont1 = createFont("Georgia", 22);
+  myFont1 = createFont("Georgia", 28);
   
-  myFont2 = createFont("Georgia", 20);
-  myFont3 = createFont("Georgia", 12);
-  myFont4 = createFont("Georgia", 8); 
+  myFont2 = createFont("Georgia", 24);
+  
+  
   
   for (int i = 0; i <8; i++){
     hurs[i] = new Hurricane();
@@ -155,47 +153,16 @@ strokeJoin(ROUND);
   // ================== Draw Panel ========================
   strokeWeight(1.0);
   noStroke();
-  fill(250,250,250,35);
-  rect(40, 400, width/6.5, height/3.2,18,18,18,18);
+  fill(250,250,250,75);
+  rect(25, 400, width/6, height/3,18,18,18,18);
   
-  fill(250,250,250,115);
+  fill(250,250,250,95);
   textFont(myFont1);
   textAlign(CENTER, CENTER);
-  text("Albert", width/10, height/2.5+height/8);
+  text("Hurricane Info", width/10, height/2.5+height/8);
   textFont(myFont2);
-  text("2014/03 - 2014 - 08", width/10, height/2.5+height/8*1.5);
-  text("landfall:Florida", width/10, height/2.5+height/8*2);
+  text("Albert", width/10, height/2.5+height/8*1.5);
+  text("2014/03 - 2014 - 08", width/10, height/2.5+height/8*2);
   text("Damage: $999", width/10, height/2.5+height/8*2.5);
-
-
-
-
-  strokeWeight(1.0);
-  noStroke();
-  fill(250,250,250,35);
-  rect(0, 130, width/13, height/4,18,18,18,18);
-  rect(10, 140, width/15, height/30,18,18,18,18);
-  rect(10, 180, width/15, height/30,18,18,18,18);
-  rect(40, 220, width/22, height/45,18,18,18,18);
-  rect(40, 250, width/22, height/45,18,18,18,18);
-  rect(40, 280, width/22, height/45,18,18,18,18);
-  
-  fill(250,250,250,175);
-
-  textAlign(CENTER, CENTER);
-  textFont(myFont2);
-  text("Top 10", 55, 150);
-
-  text("Yearly", 55,190);
-
-  textFont(myFont3);
-
-text("Arthur", 75,230);
-text("Bertha", 75,260);
-text("Cristobal", 75,290);
-
-
-
-
 
 }
