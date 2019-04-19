@@ -1,7 +1,13 @@
 // CSci-5609 Project
-
+import controlP5.*;
 import org.gicentre.geomap.*;
 
+
+ControlFrame cf;
+ControlP5 cp5;
+
+Chart myChart;
+boolean toggleValue;
 PFont myFont1;
 PFont myFont2;
 int displayMode = 1;
@@ -14,7 +20,8 @@ Hurricane[] hurs = new Hurricane[8];
 String path;
 GeoMap geoMap;
 float xo,yo;
-float zoom = 2;
+float zoom = 6;
+
 
 // Temp values;
 //String str;
@@ -27,34 +34,27 @@ void settings() {
 
 
 void setup() {
-
-  
-  
-  myFont1 = createFont("Georgia", 28);
-  
-  myFont2 = createFont("Georgia", 24);
-  
-  
+  cf = new ControlFrame(this, 400, 800, "Controls");
+  surface.setLocation(420, 10);
   
   for (int i = 0; i <8; i++){
     hurs[i] = new Hurricane();
   
   }
-
-
   // ================== Set up Map ========================
   
   geoMap = new GeoMap(this);  // Create the geoMap object.
   //geoMap = new GeoMap(-2500,-1500,1600*7,800*7,this);
   geoMap.readFile("world");   // Read shapefile.
   
+
   //================== zoom in/out ========================
- xo = 0;
-  yo = 0;
-  //smooth();
+  xo=420;
+  yo=240;
   noStroke();
   
-  
+
+
   // ================== Read File ========================
   
   path = sketchPath()+"/data/HurricaneData/2014";
@@ -89,6 +89,23 @@ void setup() {
     ++t;
   }
   
+  //====================Graph Chart============================
+ /*
+  cp5 = new ControlP5(this);
+  myChart = cp5.addChart("dataflow")
+               .setPosition(50, 50)
+               .setSize(1600, 700)
+               .setRange(-20, 20)
+               .setView(Chart.LINE) // use Chart.LINE, Chart.PIE, Chart.AREA, Chart.BAR_CENTERED
+               .setStrokeWeight(1.5)
+               .setColorCaptionLabel(color(40))
+               ;
+
+  myChart.addDataSet("incoming");
+  myChart.setData("incoming", new float[100]);
+
+*/
+  
   
 }
 
@@ -111,24 +128,31 @@ void draw() {
   
   background(0);  // Ocean colour
   
-    // ================== Draw Panel ========================
-  strokeWeight(1.0);
-  noStroke();
-  fill(250,250,250,75);
-  rect(25, 400, width/6, height/3,18,18,18,18);
-  
-  fill(250,250,250,95);
-  textFont(myFont1);
-  textAlign(CENTER, CENTER);
-  text("Hurricane Info", width/10, height/2.5+height/8);
-  textFont(myFont2);
-  text("Albert", width/10, height/2.5+height/8*1.5);
-  text("2014/03 - 2014 - 08", width/10, height/2.5+height/8*2);
-  text("Damage: $999", width/10, height/2.5+height/8*2.5);
+  toggleValue = cf.getToggleValue();
+    //====================Swtich button=============
+   //probably we can insert a graph or something for this
+
+   pushMatrix();
+  if(toggleValue){
+      
+    
+      translate(50,30); // the location for graph to pop out
+      zoom=1;
+      //insert graph here
+      fill(255);
+      rect(0,0,1600,600);
+    //myChart.push("incoming", (sin(frameCount*0.1)*10));
+      
+  }
+  popMatrix();
+
+ 
+    //Anthing we don't want to zoom should be placed above
     //==================zoom ========================
   translate(xo,yo);
   scale(zoom);
-  
+  translate(-xo,-yo);
+
   // ================== Draw Map ========================
 
   stroke(220);              // Boundary colour
@@ -146,14 +170,8 @@ strokeWeight(1);
     geoMap.draw(id);
   }
   
-  
-
-  
-
-
   // ================== Draw Hurr ========================
 float x,y;
-
 
 strokeWeight(1.0);
 strokeJoin(ROUND);
@@ -186,22 +204,28 @@ strokeJoin(ROUND);
   
   }
   
-
-
 }
 
+
 void keyPressed(){
+  if (key == 'r'){
+      zoom = 6;
+    }else if (key == 'a'){
+      zoom = 1;
+    }
   if (key == CODED){
     if (keyCode == UP){
-      zoom += .03;
+      zoom += .1;
     }else if (keyCode == DOWN){
-      zoom -= .03;
+      zoom -= .1;
     }
-    
-    if (key == ' '){
-      xo = 0;
-      yo = 0;
-      zoom = 2;
-    }
+  }
+}
+void mouseWheel(MouseEvent event) {
+  float e = event.getCount();
+  if(e == 1.0){
+    zoom += .1;
+  }else if(e == -1.0){
+    zoom -= .1;
   }
 }
