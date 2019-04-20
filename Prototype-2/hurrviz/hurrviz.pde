@@ -1,7 +1,8 @@
 // CSci-5609 Project
 import controlP5.*;
 import org.gicentre.geomap.*;
-
+import java.util.List;
+import java.util.ArrayList;
 
 ControlFrame cf;
 ControlP5 cp5;
@@ -16,7 +17,7 @@ boolean lerpit = true;
 int last;
 int factor = 5;
 String[] filenames;
-Hurricane[] hurs = new Hurricane[8];
+List<Hurricane> hurs = new ArrayList<Hurricane>();
 String path;
 GeoMap geoMap;
 float xo,yo;
@@ -37,10 +38,12 @@ void setup() {
   cf = new ControlFrame(this, 400, 800, "Controls");
   surface.setLocation(420, 10);
   
-  for (int i = 0; i <8; i++){
-    hurs[i] = new Hurricane();
+  /*
   
-  }
+  for (int i = 0; i <8; i++){
+    hurs.add( new Hurricane());
+  
+  }*/
   // ================== Set up Map ========================
   
   geoMap = new GeoMap(this);  // Create the geoMap object.
@@ -57,7 +60,7 @@ void setup() {
 
   // ================== Read File ========================
   
-  path = sketchPath()+"/data/HurricaneData/2014";
+  path = sketchPath()+"/data/HurricaneData";
   filenames = listFileNames(path);
   //printArray( filenames);
 
@@ -72,9 +75,14 @@ void setup() {
     Hurricane albert = new Hurricane();
     
     // load in .csv files
-    albert.track = loadTable(path + '/' + str, "header"); 
+    albert.track = loadTable(path + '/' + str); 
   
     // TODO: create object based on paras
+    albert.name = albert.track.getString(0,2);
+    albert.year = albert.track.getInt(0,3);
+    println(t, albert.name, albert.year);
+    
+    albert.track.removeRow(0);
     albert.track.removeRow(0);
     albert.track.removeRow(0);
     track_points = new PVector[albert.track.getRowCount()];
@@ -84,7 +92,7 @@ void setup() {
                                     albert.track.getFloat(i, 2));
     }
     albert.points = track_points;
-    hurs[t] = albert;
+    hurs.add( albert );
 
     ++t;
   }
@@ -180,7 +188,7 @@ strokeJoin(ROUND);
   
   for(Hurricane temp: hurs){
 
-    if (temp == hurs[0]){
+    if (temp == hurs.get(0)){
       strokeWeight(2.0);
       stroke(#F57474,250);
     } else { stroke(#9CD5E0,100);}
