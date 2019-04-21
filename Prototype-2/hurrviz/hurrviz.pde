@@ -191,9 +191,11 @@ List<Integer> t_years = new ArrayList<Integer>(years);
       for(Hurricane temp: hurs){
     
         if (temp == hurs.get(0)){
-          strokeWeight(2.0);
-          stroke(#F57474,250);
-        } else { stroke(#9CD5E0,100);}
+          //strokeWeight(2.0);
+          //stroke(#F57474,250);
+          // change specials' color
+          stroke(#9CD5E0,130);
+        } else { stroke(#9CD5E0,130);}
        
         
         last = temp.points.length-1;
