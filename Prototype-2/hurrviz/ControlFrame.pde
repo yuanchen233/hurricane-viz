@@ -6,11 +6,11 @@ public class ControlFrame extends PApplet {
   PApplet parent;
   ControlP5 cp5;
   ListBox l;
-  Toggle s;
+  Toggle s, s2;
   boolean toggleValue = false;
   CheckBox checkbox;
   int myColorBackground;
-  
+
   public ControlFrame(PApplet _parent, int _w, int _h, String _name) {
     super();   
     parent = _parent;
@@ -30,7 +30,7 @@ public class ControlFrame extends PApplet {
   
   // ==================List======================
   Group g = cp5.addGroup("g1")
-                .setPosition(10,150)
+                .setPosition(10,210)
                 .setSize(300,500)
                 .setBarHeight(40)
                 .setColorBackground(color(255, 100,0))
@@ -40,8 +40,40 @@ public class ControlFrame extends PApplet {
   g.getCaptionLabel().set("YEARLY HURRICANE");
   g.getCaptionLabel().setSize(30);
 
+  //================check box ============================
+  checkbox = cp5.addCheckBox("checkBox")
+                .setPosition(0, 10)
+                .setSize(80, 50)
+                .setItemsPerRow(3)
+                .setSpacingColumn(30)
+                .setSpacingRow(5)
+                .setItemHeight(40)
+                .setColorBackground(color(0xffff8800))
+                .setColorForeground(color(0,102,204))
+                ;
+    for (int i=1;i<10;i++) {
+    checkbox.addItem("200"+i, i);
+  }
+    for (int i=10;i<19;i++) {
+    checkbox.addItem("20"+i, i);
+  }
+   
+  checkbox.setGroup(g);
 
-  /*
+
+   
+   
+     s2 = cp5.addToggle("toggle")
+     .setPosition(10,100)
+     .setSize(100,30)
+     .setWidth(width)
+     .setMode(ControlP5.SWITCH)
+     ;
+  s2.getCaptionLabel().set("TOP TEN HURRICANE");
+  s2.getCaptionLabel().setSize(20);
+// ==================List======================
+/* 
+
   l = cp5.addListBox("myList")
          .setPosition(0, 0)
          .setSize(300, 500)
@@ -69,26 +101,6 @@ public class ControlFrame extends PApplet {
   }
   l.setGroup(g);
   */
-  //================check box ============================
-  checkbox = cp5.addCheckBox("checkBox")
-                .setPosition(0, 10)
-                .setSize(80, 50)
-                .setItemsPerRow(3)
-                .setSpacingColumn(30)
-                .setSpacingRow(5)
-                .setItemHeight(40)
-                .setColorBackground(color(0xffff8800))
-                .setColorForeground(color(0,102,204))
-                ;
-    for (int i=1;i<10;i++) {
-    checkbox.addItem("200"+i, i);
-  }
-    for (int i=10;i<19;i++) {
-    checkbox.addItem("20"+i, i);
-  }
-   
-  checkbox.setGroup(g);
-
    // ==================Switch button======================
   cp5.begin();
   s = cp5.addToggle("toggleValue")
@@ -100,6 +112,7 @@ public class ControlFrame extends PApplet {
   s.getCaptionLabel().set("Show Me the Graph");
   s.getCaptionLabel().setSize(20);
   cp5.end();
+  
   
   
   
