@@ -140,6 +140,9 @@ public class ControlFrame extends PApplet {
       print(n);
       if(n==1) {
         myColorBackground += checkbox.getItem(i).internalValue();
+        add_year(i+2001);
+      } else if (n == 0) {
+        remove_year(i+2001);
       }
     }
     println();    

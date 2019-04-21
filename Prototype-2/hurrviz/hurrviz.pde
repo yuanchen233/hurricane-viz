@@ -22,10 +22,12 @@ String path;
 GeoMap geoMap;
 float xo,yo;
 float zoom = 6;
-
+List<Integer> years = new ArrayList<Integer>();;
 
 // Temp values;
 //String str;
+
+
 
 void settings() {
   //fullScreen();
@@ -37,7 +39,7 @@ void settings() {
 void setup() {
   cf = new ControlFrame(this, 400, 800, "Controls");
   surface.setLocation(420, 10);
-  
+  //years.add(2014);
   /*
   
   for (int i = 0; i <8; i++){
@@ -67,36 +69,34 @@ void setup() {
   // ================== Load H ========================
   int t = 0;
   PVector[] track_points;
+
   for(String str:filenames){
-
-
-  if (str.charAt(str.length() - 1) == 'v'){
-  
-    Hurricane albert = new Hurricane();
+    if (str.charAt(str.length() - 1) == 'v'){
     
-    // load in .csv files
-    albert.track = loadTable(path + '/' + str); 
-  
-    // TODO: create object based on paras
-    albert.name = albert.track.getString(0,2);
-    albert.year = albert.track.getInt(0,3);
-    println(t, albert.name, albert.year);
+      Hurricane new_hurr = new Hurricane();
+      
+      // load in .csv files
+      new_hurr.track = loadTable(path + '/' + str); 
     
-    albert.track.removeRow(0);
-    albert.track.removeRow(0);
-    albert.track.removeRow(0);
-    track_points = new PVector[albert.track.getRowCount()];
-    
-    for (int i = 0; i < albert.track.getRowCount(); i++) {
-      track_points[i] = new PVector(albert.track.getFloat(i, 4), 
-                                    albert.track.getFloat(i, 2));
-    }
-    albert.points = track_points;
-    hurs.add( albert );
-
-    ++t;
-  }
-  
+      // TODO: create object based on paras
+      new_hurr.name = new_hurr.track.getString(0,2);
+      new_hurr.year = new_hurr.track.getInt(0,3);
+      //println(t, albert.name, albert.year);
+      
+      new_hurr.track.removeRow(0);
+      new_hurr.track.removeRow(0);
+      new_hurr.track.removeRow(0);
+      track_points = new PVector[new_hurr.track.getRowCount()];
+      
+      for (int i = 0; i < new_hurr.track.getRowCount(); i++) {
+        track_points[i] = new PVector(new_hurr.track.getFloat(i, 4), 
+                                      new_hurr.track.getFloat(i, 2));
+      }
+      new_hurr.points = track_points;
+      hurs.add( new_hurr );
+      ++t;
+    } // end if
+  } // end for
   //====================Graph Chart============================
  /*
   cp5 = new ControlP5(this);
@@ -115,7 +115,7 @@ void setup() {
 */
   
   
-}
+
 
 } // end set-up
 
@@ -184,34 +184,36 @@ float x,y;
 strokeWeight(1.0);
 strokeJoin(ROUND);
 
-  noFill();
-  
-  for(Hurricane temp: hurs){
+List<Integer> t_years = new ArrayList<Integer>(years);
 
-    if (temp == hurs.get(0)){
-      strokeWeight(2.0);
-      stroke(#F57474,250);
-    } else { stroke(#9CD5E0,100);}
-   
+  noFill();
+    for (int this_year:t_years){
+      for(Hurricane temp: hurs){
     
-    last = temp.points.length-1;
-    beginShape();
-    for (int i = 0; i < last; i+=10){
-      if (temp.points[i] != null) {
-        //println(track_points[i].x,track_points[i].y);
-          x = temp.points[i].x;
-          y = temp.points[i].y;
-          x = (180-x)*width/360;
-          y = (85-y) * height/180;
-          
-          curveVertex(x,y);
-          
+        if (temp == hurs.get(0)){
+          strokeWeight(2.0);
+          stroke(#F57474,250);
+        } else { stroke(#9CD5E0,100);}
+       
+        
+        last = temp.points.length-1;
+        beginShape();
+        for (int i = 0; i < last; i+=10){
+          if (temp.points[i] != null) {
+            //println(track_points[i].x,track_points[i].y);
+              x = temp.points[i].x;
+              y = temp.points[i].y;
+              x = (180-x)*width/360;
+              y = (85-y) * height/180;
+              if(temp.getYear() == this_year){
+                curveVertex(x,y);
+              }
+          }
+        }
+        endShape();
+      
       }
     }
-    endShape();
-  
-  }
-  
 }
 
 
@@ -236,4 +238,22 @@ void mouseWheel(MouseEvent event) {
   }else if(e == -1.0){
     zoom -= .1;
   }
+}
+
+void add_year(int year){
+  if (years.contains(year)){
+    //years.remove(year);
+  } else {
+    years.add(year);
+  }
+
+}
+
+void remove_year(int year){
+  int i = years.indexOf(year);
+  
+  if (i != -1){
+    years.remove(i);
+  }
+
 }
