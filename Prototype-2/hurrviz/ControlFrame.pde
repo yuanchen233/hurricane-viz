@@ -51,13 +51,17 @@ public class ControlFrame extends PApplet {
                 .setColorBackground(color(0xffff8800))
                 .setColorForeground(color(0,102,204))
                 ;
-    for (int i=1;i<10;i++) {
-    checkbox.addItem("200"+i, i);
+  for (int i=1;i<10;i++) {
+    
+    checkbox.addItem("200"+i,i);
   }
+
+
+  
     for (int i=10;i<19;i++) {
     checkbox.addItem("20"+i, i);
   }
-   
+  checkbox.addItem("SHOW ALL HURRICANE",20); 
   checkbox.setGroup(g);
 
 
@@ -120,14 +124,13 @@ public class ControlFrame extends PApplet {
 
   void draw() {
     background(0);
-
   }
   
   boolean getToggleValue(){
     return toggleValue;
   }
   
-  
+ 
   //event triggers when open
  void controlEvent(ControlEvent theEvent) {
   if(theEvent.isGroup()) {
