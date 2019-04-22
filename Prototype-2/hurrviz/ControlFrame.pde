@@ -10,7 +10,7 @@ public class ControlFrame extends PApplet {
   boolean toggleValue = false;
   CheckBox checkbox;
   int myColorBackground;
-
+  IntList colorList;
   public ControlFrame(PApplet _parent, int _w, int _h, String _name) {
     super();   
     parent = _parent;
@@ -41,7 +41,7 @@ public class ControlFrame extends PApplet {
   g.getCaptionLabel().setSize(30);
 
   //================check box ============================
-  checkbox = cp5.addCheckBox("checkBox")
+ /* checkbox = cp5.addCheckBox("checkBox")
                 .setPosition(0, 10)
                 .setSize(80, 50)
                 .setItemsPerRow(3)
@@ -62,7 +62,54 @@ public class ControlFrame extends PApplet {
     checkbox.addItem("20"+i, i);
   }
   checkbox.addItem("SHOW ALL HURRICANE",20); 
-  checkbox.setGroup(g);
+  */
+  
+  colorList = new IntList();
+  colorList.append(#b19cd9);  // pastel purple
+  colorList.append(#bfbfbf); //Gray
+  colorList.append(#ffffff); //White
+  colorList.append(#cbbe88); //Inverted 
+  colorList.append(#7eb6ff); // Parakeet light Blue
+  
+  colorList.append(#327932); // green
+  colorList.append(#e62020); //Lust orange
+  colorList.append(#849318);  //yellow green
+  colorList.append(#653a71);  //purple
+  colorList.append(#986c13);  //yellow brown
+  
+  colorList.append(#00ab7a);  //green cyan
+  colorList.append(#884323);  //red brown
+  colorList.append(#cccc00);  //darker yellow
+  colorList.append(#ffcff1);  //pink
+  colorList.append(#f64a8a);  // french rose
+  
+  colorList.append(#720b98);  //chinese purple
+  colorList.append(#fb4d46);  //Tart orange
+  colorList.append(#fd7657);  //light red
+  colorList.append(#e9ffdb);  //Nyanza
+  
+  println(colorList);  
+
+   for(int i = 1; i<19;i++){
+   int num = colorList.get(i-1);
+   checkbox = cp5.addCheckBox("checkBox"+i)  
+               .setPosition(0,i*30)
+               .setSize(100,20)
+               .setSpacingColumn(60)
+               .setItemsPerRow(2)
+               .setColorLabel(num)
+               .setColorBackground(color(0xffff8800))
+               .setColorForeground(color(0,102,204))
+               ;
+    checkbox.setGroup(g);
+               if(i<10){
+               checkbox.addItem("200"+i,i);
+               }else{
+               checkbox.setPosition(0,i*30);
+               checkbox.addItem("20"+i,i);
+               }
+             }
+  
 
 
    
