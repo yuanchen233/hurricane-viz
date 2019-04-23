@@ -6,6 +6,8 @@ public class Hurricane {
   private Table track;
   
   private String name;
+  
+  public int level;
   /**
    * 
    */
@@ -28,6 +30,7 @@ public class Hurricane {
     this.end_date = end_date;
     this.land_fallx = land_fallx;
     this.land_fally = land_fally;
+    this.level = 0;
   }
   private int year;
   private int start_date;

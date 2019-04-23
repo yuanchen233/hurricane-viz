@@ -18,7 +18,14 @@ public class ControlFrame extends PApplet {
     h=_h;
     PApplet.runSketch(new String[]{this.getClass().getName()}, this);
   }
-
+  
+  public Integer get_color(int i) {
+    if (i >= 0){
+    return colorList.get(i);}
+    
+    return 0;
+  }
+  
   public void settings() {
     size(w, h);
   }
@@ -88,11 +95,11 @@ public class ControlFrame extends PApplet {
   colorList.append(#fd7657);  //light red
   colorList.append(#e9ffdb);  //Nyanza
   
-  println(colorList);  
+  //println(colorList);  
 
    for(int i = 1; i<19;i++){
    int num = colorList.get(i-1);
-   checkbox = cp5.addCheckBox("checkBox"+i)  
+   checkbox = cp5.addCheckBox("checkBox"+i)
                .setPosition(0,i*30)
                .setSize(100,20)
                .setSpacingColumn(60)
@@ -180,12 +187,39 @@ public class ControlFrame extends PApplet {
  
   //event triggers when open
  void controlEvent(ControlEvent theEvent) {
+   String temp;
+   int year = 0;
   if(theEvent.isGroup()) {
-    println("got an event from group "
+     /* println("got an event from group "
             +theEvent.getGroup().getName()
             +", isOpen? "+theEvent.getGroup().isOpen()
             );
-            
+           */
+           
+    //println(checkbox.getArrayValue());
+    
+    temp = theEvent.getGroup().getName();
+    char c_tens = (temp.charAt(temp.length() - 2));
+    char c = (temp.charAt(temp.length() - 1));
+    
+    if (Character.isDigit(c_tens)){
+      year += 10;
+      println(1000);
+    }
+    
+    year += Character.getNumericValue(c);
+    
+
+  if(theEvent.getGroup().getArrayValue()[0] == 1) {
+        theEvent.getGroup().setArrayValue(0,0);
+        add_year(year+2000);
+
+      } else {
+        remove_year(year + 2000);
+        theEvent.getGroup().setArrayValue(0,1);
+      }
+    
+    
   } else if (theEvent.isController()){
     println("got something from a controller "
             +theEvent.getController().getName()
@@ -193,22 +227,30 @@ public class ControlFrame extends PApplet {
   }
   
   if (theEvent.isFrom(checkbox)) {
+    
+
     myColorBackground = 170;
+   /* 
     print("got an event from "+checkbox.getName()+"\t\n");
     // checkbox uses arrayValue to store the state of 
     // individual checkbox-items. usage:
     println(checkbox.getArrayValue());
+    
+    
+     */ 
     for (int i=0;i<checkbox.getArrayValue().length;i++) {
       int n = (int)checkbox.getArrayValue()[i];
-      print(n);
+    
       if(n==1) {
         myColorBackground += checkbox.getItem(i).internalValue();
-        add_year(i+2001);
+        remove_year(i+2018);
+
       } else if (n == 0) {
-        remove_year(i+2001);
+        
+        add_year(2018);
       }
     }
-    println();    
+
   }
 
  }

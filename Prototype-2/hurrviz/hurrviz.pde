@@ -81,7 +81,8 @@ void setup() {
       // TODO: create object based on paras
       new_hurr.name = new_hurr.track.getString(0,2);
       new_hurr.year = new_hurr.track.getInt(0,3);
-      //println(t, albert.name, albert.year);
+      new_hurr.level = new_hurr.track.getInt(3,6);
+      //println(t, new_hurr.name, new_hurr.year);
       
       new_hurr.track.removeRow(0);
       new_hurr.track.removeRow(0);
@@ -169,7 +170,7 @@ strokeWeight(1);
   // Draw entire world map.
   fill(180);        // Land colour
   geoMap.draw();              // Draw the entire map.
-
+/*
   // Find the country at the mouse position and draw it in different colour.
   int id = geoMap.getID(mouseX, mouseY);
   if (id != -1)
@@ -177,7 +178,7 @@ strokeWeight(1);
     fill(100);      // Highlighted land colour.
     geoMap.draw(id);
   }
-  
+  */
   // ================== Draw Hurr ========================
 float x,y;
 
@@ -190,14 +191,11 @@ List<Integer> t_years = new ArrayList<Integer>(years);
     for (int this_year:t_years){
       for(Hurricane temp: hurs){
     
-        if (temp == hurs.get(0)){
-          //strokeWeight(2.0);
-          //stroke(#F57474,250);
-          // change specials' color
-          stroke(#9CD5E0,130);
-        } else { stroke(#9CD5E0,130);}
-       
-        
+//println(this_year - 2002);
+          stroke(cf.get_color(this_year-2001),170);
+          strokeWeight(0.7+temp.level/8.0);
+
+         
         last = temp.points.length-1;
         beginShape();
         for (int i = 0; i < last; i+=10){
