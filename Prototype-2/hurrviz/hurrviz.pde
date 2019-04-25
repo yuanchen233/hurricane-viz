@@ -218,16 +218,16 @@ List<Integer> t_years = new ArrayList<Integer>(years);
 
 
 void keyPressed(){
-  if (key == 'r'){
-      zoom = 6;
-    }else if (key == 'a'){
-      zoom = 1;
-    }
+
   if (key == CODED){
     if (keyCode == UP){
       zoom += .1;
     }else if (keyCode == DOWN){
       zoom -= .1;
+    }else if(keyCode == LEFT){
+     zoom = 6;
+    }else if (keyCode == RIGHT){
+      zoom = 1;
     }
   }
 }
