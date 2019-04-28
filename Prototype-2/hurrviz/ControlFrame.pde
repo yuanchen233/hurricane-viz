@@ -15,6 +15,7 @@ public class ControlFrame extends PApplet {
     super();   
     parent = _parent;
     w=_w;
+    _h=1200;
     h=_h;
     PApplet.runSketch(new String[]{this.getClass().getName()}, this);
   }
@@ -37,27 +38,27 @@ public class ControlFrame extends PApplet {
   
   // ==================List for 2001-2018======================
   Group g = cp5.addGroup("g1")
-                .setPosition(10,210)
-                .setSize(300,500)
-                .setBarHeight(40)
+                .setPosition(10,140)
+                .setSize(200,500)
+                .setBarHeight(30)
                 .setColorBackground(color(255, 100,0))
                 .setColorActive(color(0))
                 .setColorForeground(color(0,102,204))
                 ;
   g.getCaptionLabel().set("Hurricance 2001-2018");
-  g.getCaptionLabel().setSize(30);
+  g.getCaptionLabel().setSize(20);
 
   // ==================List for 2001-2008======================
   Group g2 = cp5.addGroup("g2")
-                .setPosition(10,260)
-                .setSize(300,500)
-                .setBarHeight(40)
+                .setPosition(10,180)
+                .setSize(200,500)
+                .setBarHeight(30)
                 .setColorBackground(color(255, 100,0))
                 .setColorActive(color(0))
                 .setColorForeground(color(0,102,204))
                 ;
-  g.getCaptionLabel().set("Hurricance 1900-2000");
-  g.getCaptionLabel().setSize(30);
+  g2.getCaptionLabel().set("Hurricance 1901-2000");
+  g2.getCaptionLabel().setSize(19);
   //================check box ============================
  /* checkbox = cp5.addCheckBox("checkBox")
                 .setPosition(0, 10)
@@ -108,10 +109,10 @@ public class ControlFrame extends PApplet {
   
   //println(colorList);  
   //=====================checkbox for 2001-2018=======================
-   for(int i = 1; i<19;i++){
-   int num = colorList.get(i-1);
+   for(int i = 0; i<19;i++){
+   int num = colorList.get(i);
    checkbox = cp5.addCheckBox("checkBox"+i)
-               .setPosition(0,i*30)
+               .setPosition(210,(-70+i*30))
                .setSize(100,20)
                .setSpacingColumn(60)
                .setItemsPerRow(2)
@@ -120,45 +121,37 @@ public class ControlFrame extends PApplet {
                .setColorForeground(color(0,102,204))
                ;
     checkbox.setGroup(g);
-               if(i<10){
-               checkbox.addItem("200"+i,i);
-               }else{
-               checkbox.setPosition(0,i*30);
-               checkbox.addItem("20"+i,i);
-               }
+    String sd = nfs(i,2).replaceAll("\\s","");
+    checkbox.addItem("20"+sd, i);
+
              }
   
 
-  //=====================checkbox for 1900-2000=======================
-   
-   for(int i = 1; i<19;i++){
-   int num = colorList.get(i-1);
+  //=====================checkbox for 1901-2000=======================
+   for(int i = 0; i<99;i++){
+   int num = colorList.get(0);
    checkbox2 = cp5.addCheckBox("checkBox2"+i)
-               .setPosition(0,i*30-30)
-               .setSize(100,20)
+               .setPosition(10,(i*30))
+               .setSize(50,20)
                .setSpacingColumn(60)
-               .setItemsPerRow(2)
                .setColorLabel(num)
                .setColorBackground(color(0xffff8800))
                .setColorForeground(color(0,102,204))
                ;
     checkbox2.setGroup(g2);
-               if(i<10){
-               checkbox2.addItem("190"+i,i);
-               }else{
-               checkbox2.setPosition(0,i*30);
-               checkbox2.addItem("19"+i,i);
-               }
-             }
-   
-     s2 = cp5.addToggle("toggle")
-     .setPosition(10,100)
-     .setSize(100,30)
-     .setWidth(width)
-     .setMode(ControlP5.SWITCH)
-     ;
-  s2.getCaptionLabel().set("TOP TEN HURRICANE");
-  s2.getCaptionLabel().setSize(20);
+    String sd = nfs(i,2).replaceAll("\\s","");
+    checkbox2.addItem("19"+sd, i);
+    if(i>25){
+      checkbox2.setPosition(110,i*30-26*30);
+    }else if(i>50){
+      checkbox2.setPosition(210,i*30-26*30);
+    }else if(i>75){
+      checkbox2.setPosition(310,i*30-26*30);
+    }
+  }
+    checkbox2.setItemsPerRow(3);
+    checkbox2.setSpacingColumn(10);
+    checkbox2.setSpacingRow(10);
 // ==================List======================
 /* 
 
@@ -281,7 +274,9 @@ public class ControlFrame extends PApplet {
       }
     }
 
-  }else if(theEvent.isFrom(checkbox2)){
+  }
+
+  else if(theEvent.isFrom(checkbox2)){
      for (int i=0;i<checkbox.getArrayValue().length;i++) {
       int n = (int)checkbox.getArrayValue()[i];
     
@@ -306,5 +301,6 @@ void checkBox(float[] a) {
 void checkBox2(float[] a) {
   println(a);
 }
+
 
 }

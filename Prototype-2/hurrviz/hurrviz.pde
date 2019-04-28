@@ -31,7 +31,7 @@ List<Integer> years = new ArrayList<Integer>();;
 
 void settings() {
   //fullScreen();
-  size(1600,800, P3D);  // Use the P3D renderer for 3D graphics
+  size(1600,1200, P3D);  // Use the P3D renderer for 3D graphics
   smooth(4);
 }
 
@@ -55,7 +55,7 @@ void setup() {
 
   //================== zoom in/out ========================
   xo=420;
-  yo=240;
+  yo=330;
   noStroke();
   
 
