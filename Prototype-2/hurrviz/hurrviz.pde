@@ -1,13 +1,16 @@
 // CSci-5609 Project
 import controlP5.*;
 import org.gicentre.geomap.*;
+import org.gicentre.utils.stat.*; 
 import java.util.List;
 import java.util.ArrayList;
 
 ControlFrame cf;
 ControlP5 cp5;
 
-Chart myChart;
+BarChart barChart;
+BarChart barChart1;
+PFont titleFont,smallFont;
 boolean toggleValue;
 PFont myFont1;
 PFont myFont2;
@@ -23,18 +26,50 @@ String path;
 GeoMap geoMap;
 float xo,yo;
 float zoom = 6;
-List<Integer> years = new ArrayList<Integer>();;
+List<Integer> years = new ArrayList<Integer>();
 
 void settings() {
   //fullScreen();
-  size(1600,1200, P3D);  // Use the P3D renderer for 3D graphics
+  size(1500,1000, P3D);  // Use the P3D renderer for 3D graphics
   smooth(4);
 }
 
 void setup() {
   cf = new ControlFrame(this, 400, 800, "Controls");
   surface.setLocation(420, 10);
+    //====================Graph Chart============================
+  titleFont = loadFont("Helvetica-22.vlw");
+  smallFont = loadFont("Helvetica-12.vlw");
+  textFont(smallFont);
 
+  float [] stormsData =new float[] {84,61,71,115, 104, 119, 95,95,93,110,151,137};
+  float [] hData = new float[] {42,37,41,52,53,68,62,50,52,64,74,66};
+  String [] barLabels = new String[] {"1900-1909","1910-1919","1920-1929","1930-1939","1940-1949",
+                                        "1950-1959","1960-1969","1970-1979","1980-1989","1990-1999",
+                                      "2000-2009","2010-2018"};
+  barChart = new BarChart(this);
+  barChart.setData(stormsData);
+  barChart.setBarLabels(barLabels);
+  barChart.setBarColour(color(200,80,80,100));
+  barChart.setBarGap(2); 
+  barChart.setValueFormat("###,###");
+  barChart.setMinValue(0);
+  barChart.setMaxValue(200);
+  barChart.showValueAxis(true); 
+  barChart.showCategoryAxis(true); 
+  
+  barChart1 = new BarChart(this);
+  barChart1.setData(hData);
+  barChart1.setBarLabels(barLabels);
+  barChart1.setBarColour(color(200,70,70,130));
+  barChart1.setBarGap(2);
+  barChart1.setValueFormat("###,###");
+  barChart1.setMinValue(0);
+  barChart1.setMaxValue(200);
+  barChart1.showValueAxis(true); 
+  barChart1.showCategoryAxis(true); 
+
+  
   // ================== Set up Map ========================
   
   geoMap = new GeoMap(this);  // Create the geoMap object.
@@ -43,8 +78,8 @@ void setup() {
   
 
   //================== zoom in/out ========================
-  xo=420;
-  yo=330;
+  xo=350;
+  yo=300;
   noStroke();
 
   // ================== Read File ========================
@@ -139,29 +174,6 @@ void setup() {
   
   
   
-  
-  
-  
-  
-  
-  //====================Graph Chart============================
- /*
-  cp5 = new ControlP5(this);
-  myChart = cp5.addChart("dataflow")
-               .setPosition(50, 50)
-               .setSize(1600, 700)
-               .setRange(-20, 20)
-               .setView(Chart.LINE) // use Chart.LINE, Chart.PIE, Chart.AREA, Chart.BAR_CENTERED
-               .setStrokeWeight(1.5)
-               .setColorCaptionLabel(color(40))
-               ;
-
-  myChart.addDataSet("incoming");
-  myChart.setData("incoming", new float[100]);
-
-*/
-  
-  
 
 
 } // end set-up
@@ -192,11 +204,25 @@ void draw() {
       
     
       translate(50,30); // the location for graph to pop out
-      zoom=1;
       //insert graph here
-      fill(255);
-      rect(0,0,1600,600);
-    //myChart.push("incoming", (sin(frameCount*0.1)*10));
+      background(255);
+      barChart.draw(10,10,width-20,height-50);      
+      barChart1.draw(10,10,width-20,height-50);
+      
+ 
+      fill(120);
+      textFont(titleFont);
+      text("Atlantic Basin Storm Totals by Year ", 70,30);
+      float textHeight = textAscent();
+      textFont(smallFont);
+      text("(including subtropical cyclones)  ", 70,30+textHeight);
+      text("Tropical Storms", 100,60+textHeight);
+      text("Hurricanes", 100,80+textHeight);
+      fill(255, 90, 90);
+      ellipse(240,55+textHeight,16,16);
+      fill(200,70,70,130);
+      ellipse(240,75+textHeight,16,16);
+
       
   }
   popMatrix();
@@ -211,7 +237,7 @@ void draw() {
   // ================== Draw Map ========================
 
   stroke(220);              // Boundary colour
-  
+  if(!toggleValue){
 strokeWeight(1);
   // Draw entire world map.
   fill(180);        // Land colour
@@ -260,6 +286,7 @@ List<Integer> t_years = new ArrayList<Integer>(years);
       
       }
     }
+  }
 }
 
 
