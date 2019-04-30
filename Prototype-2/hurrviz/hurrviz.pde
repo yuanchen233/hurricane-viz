@@ -18,16 +18,12 @@ int last;
 int factor = 5;
 String[] filenames;
 List<Hurricane> hurs = new ArrayList<Hurricane>();
+List<Hurricane> hurs2 = new ArrayList<Hurricane>();
 String path;
 GeoMap geoMap;
 float xo,yo;
 float zoom = 6;
 List<Integer> years = new ArrayList<Integer>();;
-
-// Temp values;
-//String str;
-
-
 
 void settings() {
   //fullScreen();
@@ -35,17 +31,10 @@ void settings() {
   smooth(4);
 }
 
-
 void setup() {
   cf = new ControlFrame(this, 400, 800, "Controls");
   surface.setLocation(420, 10);
-  //years.add(2014);
-  /*
-  
-  for (int i = 0; i <8; i++){
-    hurs.add( new Hurricane());
-  
-  }*/
+
   // ================== Set up Map ========================
   
   geoMap = new GeoMap(this);  // Create the geoMap object.
@@ -57,8 +46,6 @@ void setup() {
   xo=420;
   yo=330;
   noStroke();
-  
-
 
   // ================== Read File ========================
   
@@ -66,7 +53,7 @@ void setup() {
   filenames = listFileNames(path);
   //printArray( filenames);
 
-  // ================== Load H ========================
+  // ================== Load recent H ========================
   int t = 0;
   PVector[] track_points;
 
@@ -98,6 +85,65 @@ void setup() {
       ++t;
     } // end if
   } // end for
+  
+  
+    // ================== Load more H ========================
+  
+  
+  
+  Table track = loadTable("data/hurdat3.csv");
+  int num = track.getRowCount();
+  
+  for (int k = 0; k < 500;k++){
+    
+    String name = track.getString(0,1).replaceAll("\\s","");
+    
+    String year_str = track.getString(0,0);
+    int isYear = track.getInt(0,0);  
+    if(isYear == 0){
+      
+      Hurricane new_hurr = new Hurricane();
+      new_hurr.name = name;
+      new_hurr.track = new Table();
+      new_hurr.year = get_year(year_str);
+      hurs2.add(new_hurr);
+
+    } else {
+      hurs2.get(hurs2.size() - 1).track.addRow(track.getRow(0));
+    }
+    
+    track.removeRow(0);
+  }
+ 
+  for(Hurricane temp: hurs2){
+
+    String strX, strY;
+    float x, y;
+    PVector[] points = new PVector[temp.track.getRowCount()];
+    for (int i = 0; i < temp.track.getRowCount(); i++) {
+
+      //print(temp.track.getRowCount());
+      
+      strX = temp.track.getString(i, 4);
+      strY = temp.track.getString(i, 5);
+      x = Float.parseFloat(strX.substring(0,(strX.length()-1)));
+      y = Float.parseFloat(strY.substring(0,(strY.length()-1)));
+      //print(x,y);
+              
+        points[i] = new PVector(x,  y);
+
+              
+      }
+    temp.points = points;
+  }
+  
+  
+  
+  
+  
+  
+  
+  
   //====================Graph Chart============================
  /*
   cp5 = new ControlP5(this);
@@ -198,7 +244,7 @@ List<Integer> t_years = new ArrayList<Integer>(years);
          
         last = temp.points.length-1;
         beginShape();
-        for (int i = 0; i < last; i+=10){
+        for (int i = 0; i < last; i+=1){
           if (temp.points[i] != null) {
             //println(track_points[i].x,track_points[i].y);
               x = temp.points[i].x;
@@ -256,4 +302,19 @@ void remove_year(int year){
     years.remove(i);
   }
 
+}
+
+int get_year(String year_str){
+
+  char c;
+  int year = 0;
+  c = year_str.charAt(year_str.length() - 1);
+  year += Character.getNumericValue(c);
+  c = year_str.charAt(year_str.length() - 2);
+  year += Character.getNumericValue(c) * 10;
+  c = year_str.charAt(year_str.length() - 3);
+  year += Character.getNumericValue(c) * 100; 
+  c = year_str.charAt(year_str.length() - 4);
+  year += Character.getNumericValue(c) * 1000;
+  return year;
 }

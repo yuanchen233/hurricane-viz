@@ -32,6 +32,7 @@ public class Hurricane {
     this.land_fally = land_fally;
     this.level = 0;
   }
+  
   private int year;
   private int start_date;
   private int end_date;

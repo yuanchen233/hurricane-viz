@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 
 
-List<Hurricane> hurs = new ArrayList<Hurricane>();
+List<Hurricane> hurs2 = new ArrayList<Hurricane>();
 
 void settings() {
   size(1000,800);
@@ -11,65 +11,51 @@ void settings() {
 
 void setup() {
 
-  int year;
-  Table track = loadTable("hurdat3.csv"); 
-  Table this_track = new Table();
-  PVector[] track_points;
-  Hurricane new_hurr = new Hurricane();
+  Table track = loadTable("hurdat3.csv");
   int num = track.getRowCount();
+  
   for (int k = 0; k < 500;k++){
+    
     String name = track.getString(0,1).replaceAll("\\s","");
     
     String year_str = track.getString(0,0);
-    int isYear = track.getInt(0,0);
-    //println("hi");
-    String strX, strY;
-    float x, y;
-  
+    int isYear = track.getInt(0,0);  
     if(isYear == 0){
-      if (new_hurr.track != null){
-        track_points = new PVector[new_hurr.track.getRowCount()];
-            for (int i = 0; i < new_hurr.track.getRowCount(); i++) {
-              strX = new_hurr.track.getString(i, 4);
-              strY = new_hurr.track.getString(i, 5);
-              x = Float.parseFloat(strX.substring(0,(strX.length()-1)));
-              y = Float.parseFloat(strY.substring(0,(strY.length()-1)));
-              print(x,y);
-              
-              track_points[i] = new PVector(x,  y);
-
-              }
-      //println(track_points.length);
-      new_hurr.points = track_points;
-      hurs.add( new_hurr );
       
-      
-      }
-      
-      
+      Hurricane new_hurr = new Hurricane();
       new_hurr.name = name;
       new_hurr.track = new Table();
       new_hurr.year = get_year(year_str);
-      
-  println(k, "/",name, new_hurr.year, isYear);
-  
-      //println(new_hurr.year);
-      // create a new hurr
-    
-    } else {
+      hurs2.add(new_hurr);
 
-      new_hurr.track.addRow(track.getRow(0));
+    } else {
+      hurs2.get(hurs2.size() - 1).track.addRow(track.getRow(0));
     }
+    
     track.removeRow(0);
   }
  
- 
- 
- 
- println(hurs.get(0).points.length);
- 
- 
- 
+  for(Hurricane temp: hurs2){
+
+    String strX, strY;
+    float x, y;
+    PVector[] points = new PVector[temp.track.getRowCount()];
+    for (int i = 0; i < temp.track.getRowCount(); i++) {
+
+      //print(temp.track.getRowCount());
+      
+      strX = temp.track.getString(i, 4);
+      strY = temp.track.getString(i, 5);
+      x = Float.parseFloat(strX.substring(0,(strX.length()-1)));
+      y = Float.parseFloat(strY.substring(0,(strY.length()-1)));
+      //print(x,y);
+              
+        points[i] = new PVector(x,  y);
+
+              
+      }
+    temp.points = points;
+  }
 }
 
 
@@ -82,12 +68,13 @@ void draw() {
 int last;
 float x,y;
 int this_year = 1851;
-float xx=10,yy=10;
 
-      for(Hurricane temp: hurs){
-    rect(xx,yy,50,50);
+
+      for(Hurricane temp: hurs2){
+    
     
         last = temp.points.length;
+        println(last);
         beginShape();
         for (int i = 0; i < last; i+=1){
           if (temp.points[i] != null) {
@@ -104,13 +91,8 @@ float xx=10,yy=10;
           }
         }
         endShape();
-      xx+=1;
-      yy+=1;
+
       }
-
-
-
-
 }
 
 int get_year(String year_str){
