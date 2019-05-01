@@ -1,4 +1,4 @@
-//Left Applet
+//Control Panel
 
 public class ControlFrame extends PApplet {
 
@@ -13,20 +13,18 @@ public class ControlFrame extends PApplet {
   CheckBox checkbox,checkbox2;
   int myColorBackground;
   IntList colorList;
-  StringList group;
+
   public ControlFrame(PApplet _parent, int _w, int _h, String _name) {
-    super();   
+    super();  
     parent = _parent;
-    w=_w;
-    _h=1000;
-    h=_h;
+    w = _w;
+    _h = 1000;
+    h =_h;
     PApplet.runSketch(new String[]{this.getClass().getName()}, this);
   }
   
   public Integer get_color(int i) {
-    if (i >= 0){
-    return colorList.get(i);}
-    
+    if (i >= 0){ return colorList.get(i); }
     return 0;
   }
   
@@ -38,77 +36,91 @@ public class ControlFrame extends PApplet {
   surface.setLocation(10, 10);
   noStroke();
   cp5 = new ControlP5(this);
-  
-  // ==================List for 2001-2018======================
- /* Group g = cp5.addGroup("g1")
-                .setPosition(10,140)
-                .setSize(200,500)
-                .setBarHeight(30)
-                .setColorBackground(color(255, 100,0))
-                .setColorActive(color(0))
-                .setColorForeground(color(0,102,204))
-                ;
-  g.getCaptionLabel().set("Hurricance 2001-2018");
-  g.getCaptionLabel().setSize(20);
+  setColorList();
 
-  // ==================List for 2001-2008======================
-  Group g2 = cp5.addGroup("g2")
-                .setPosition(10,180)
-                .setSize(200,500)
+  /*
+  //===================== test =======================
+  Group gtest = cp5.addGroup("gtest")
+                .setPosition(160,240)
+                .setSize(200,300)
                 .setBarHeight(30)
-                .setColorBackground(color(255, 100,0))
+                .setColorBackground(color(255, 0,0))
                 .setColorActive(color(0))
                 .setColorForeground(color(0,102,204))
                 ;
-  g2.getCaptionLabel().set("Hurricance 1901-2000");
-  g2.getCaptionLabel().setSize(19);
+  gtest.getCaptionLabel().set("Test");
+  gtest.getCaptionLabel().setSize(20);
+
+
+   for(int i = 0; i< 9;i++){
+   int num = colorList.get(i);
+   checkbox = cp5.addCheckBox("checkBox"+i)
+               .setPosition(110,(-70+i*30))
+               .setSize(100,20)
+               .setSpacingColumn(60)
+               .setItemsPerRow(2)
+               .setColorLabel(num)
+               .setColorBackground(color(0xffff8800))
+               .setColorForeground(color(0,102,204))
+               ;
+    checkbox.setGroup(gtest);
+    String sd = nfs(i,2).replaceAll("\\s","");
+    checkbox.addItem("20"+sd, i);
+  }
+  
   */
+  //===================== end test =======================
+
+
+
+
+//===================== List of decades =======================
   List<Group> groups = new ArrayList<Group>();
 
-  for(int i=0;i<20;i++){
-    group = new StringList();
-    group.append("g+i");
-    Group group = cp5.addGroup("g+i")
-                .setPosition(10,140+i*40)
+  for( Integer i=0; i<12; i++){
+    Integer year = (1900 + i*10);
+    Integer year2 = (1910 + i*10);
+    Group group = cp5.addGroup("g"+i.toString())
+                .setPosition(10,150+i*50)
                 .setSize(200,500)
-                .setBarHeight(30)
+                .setBarHeight(40)
                 .setColorBackground(color(255, 100,0))
                 .setColorActive(color(0))
                 .setColorForeground(color(0,102,204))
                 ;
-  group.getCaptionLabel().set("Hurricance 1901-2000");
-  group.getCaptionLabel().setSize(19);
-  groups.add(group);
+    group.getCaptionLabel().set("Hurricance "+year.toString() + "-" + year2.toString() );
+    group.getCaptionLabel().setSize(19);
+    groups.add(group);
   }
   
   
-  colorList = new IntList();
-  colorList.append(#b19cd9);  // pastel purple
-  colorList.append(#bfbfbf); //Gray
-  colorList.append(#ffffff); //White
-  colorList.append(#cbbe88); //Inverted 
-  colorList.append(#7eb6ff); // Parakeet light Blue
   
-  colorList.append(#327932); // green
-  colorList.append(#e62020); //Lust orange
-  colorList.append(#849318);  //yellow green
-  colorList.append(#653a71);  //purple
-  colorList.append(#986c13);  //yellow brown
+   for(int i = 0; i< 9;i++){
+     int num = colorList.get(i);
+     checkbox = cp5.addCheckBox("checkBox"+i)
+                 .setPosition(220,(-30+i*30))
+                 .setSize(100,20)
+                 .setSpacingColumn(60)
+                 .setItemsPerRow(2)
+                 .setColorLabel(num)
+                 .setColorBackground(color(0xffff8800))
+                 .setColorForeground(color(0,102,204))
+                 ;
+      checkbox.setGroup(groups.get(0));
+      String sd = nfs(i,2).replaceAll("\\s","");
+      checkbox.addItem("20"+sd, i);
+    }
   
-  colorList.append(#00ab7a);  //green cyan
-  colorList.append(#884323);  //red brown
-  colorList.append(#cccc00);  //darker yellow
-  colorList.append(#ffcff1);  //pink
-  colorList.append(#f64a8a);  // french rose
   
-  colorList.append(#720b98);  //chinese purple
-  colorList.append(#fb4d46);  //Tart orange
-  colorList.append(#fd7657);  //light red
-  colorList.append(#e9ffdb);  //Nyanza
   
-  //println(colorList);  
+  
+  
+  
+  
+
+ /* 
   //=====================checkbox for 2001-2018=======================
-/*   for(int i = 0; i<19;i++){
+   for(int i = 0; i<19;i++){
    int num = colorList.get(i);
    checkbox = cp5.addCheckBox("checkBox"+i)
                .setPosition(210,(-70+i*30))
@@ -122,13 +134,12 @@ public class ControlFrame extends PApplet {
     String sd = nfs(i,2).replaceAll("\\s","");
     checkbox.addItem("20"+sd, i);
     if(i>10){
-    checkbox.setGroup(g);
+    checkbox.setGroup(g2);
     }else{
-    checkbox.setGroup(g1);
+    checkbox.setGroup(g2);
     }
 
              }
-  
 
   //=====================checkbox for 1901-2000=======================
    for(int i = 0; i<99;i++){
@@ -178,7 +189,7 @@ public class ControlFrame extends PApplet {
   }
 */
 
-   // ==================Switch button======================
+   // ==================== Switch button ======================
   cp5.begin();
   s = cp5.addToggle("toggleValue")
      .setPosition(10,30)
@@ -190,7 +201,7 @@ public class ControlFrame extends PApplet {
   s.getCaptionLabel().setSize(20);
 
   
-  //======================toggle for NOAA graph====================
+  //====================== Toggle for NOAA graph====================
    
 
   simage = cp5.addToggle("toggle")
@@ -209,6 +220,7 @@ public class ControlFrame extends PApplet {
   void draw() {
     background(0);
   }
+  
   //switch button value
     
   boolean getToggleValueImage(){
@@ -221,9 +233,9 @@ public class ControlFrame extends PApplet {
   
  
   //event triggers when open
- void controlEvent(ControlEvent theEvent) {
-   String temp;
-   int year = 0;
+  void controlEvent(ControlEvent theEvent) {
+  String temp;
+  int year = 0;
   if(theEvent.isGroup()) {
      /* println("got an event from group "
             +theEvent.getGroup().getName()
@@ -301,19 +313,36 @@ public class ControlFrame extends PApplet {
         
         add_year(2018);
       }
+    }
+  }
+
+  }
+
+
+  void setColorList(){
+    colorList = new IntList();
+    colorList.append(#b19cd9);  // pastel purple
+    colorList.append(#bfbfbf); //Gray
+    colorList.append(#ffffff); //White
+    colorList.append(#cbbe88); //Inverted 
+    colorList.append(#7eb6ff); // Parakeet light Blue
+    
+    colorList.append(#327932); // green
+    colorList.append(#e62020); //Lust orange
+    colorList.append(#849318);  //yellow green
+    colorList.append(#653a71);  //purple
+    colorList.append(#986c13);  //yellow brown
+    
+    colorList.append(#00ab7a);  //green cyan
+    colorList.append(#884323);  //red brown
+    colorList.append(#cccc00);  //darker yellow
+    colorList.append(#ffcff1);  //pink
+    colorList.append(#f64a8a);  // french rose
+    
+    colorList.append(#720b98);  //chinese purple
+    colorList.append(#fb4d46);  //Tart orange
+    colorList.append(#fd7657);  //light red
+    colorList.append(#e9ffdb);  //Nyanza
+  }
   
-  }
-  }
-
- }
- 
-void checkBox(float[] a) {
-  println(a);
-}
-
-void checkBox2(float[] a) {
-  println(a);
-}
-
-
 }
