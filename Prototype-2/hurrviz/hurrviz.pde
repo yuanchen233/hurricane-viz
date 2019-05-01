@@ -249,11 +249,11 @@ void draw() {
 
   // ================== Draw Map ========================
 
-  stroke(220);              // Boundary colour
+  stroke(71.37);              // Boundary colour
   if(!toggleValue &!toggle){       // if toggle is off 
  strokeWeight(1);
   // Draw entire world map.
-  fill(180);        // Land colour
+  fill(85.88);        // Land colour
   geoMap.draw();              // Draw the entire map.
 /*
   // Find the country at the mouse position and draw it in different colour.

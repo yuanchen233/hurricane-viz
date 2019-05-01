@@ -53,20 +53,25 @@ public class ControlFrame extends PApplet {
     Group group = cp5.addGroup(name.toString())
                 .setPosition(10,200)
                 .hide()
+                .setColorBackground(color(71.37))
+                .setColorActive(color(85.88))
+                .setColorForeground(color(85.88))
                 .setBarHeight(0);
     group.getCaptionLabel().set( "" );
     groups.add(group);
     
+    int labelnum = colorList.get(i);
     String bname = nfs(i,2).replaceAll("\\s","");
     Button but = cp5.addButton("b"+bname)
                 .setPosition(10,150+i*55)
                 .setSize(200,40)
-                .setColorBackground(color(255, 100,0))
-                .setColorActive(color(0))
-                .setColorForeground(color(0,102,204))
+                .setColorBackground(color(71.37))
+                .setColorActive(color(85.88))
+                .setColorForeground(color(85.88))
                 ;
     but.getCaptionLabel().set("Hurricance "+year.toString() + "-" + year2.toString() );
     but.getCaptionLabel().setSize(19);
+    but.getCaptionLabel().setColor(labelnum);
     buttons.add(but);
   }
   
@@ -182,12 +187,12 @@ public class ControlFrame extends PApplet {
 
     if(groups.get(index).isVisible()) {
       groups.get(index).hide();
-      buttons.get(index).setColorBackground(color(255, 100,0));
+      buttons.get(index).setColorBackground(color(128));
     }
     else {
       hideAll();
       groups.get(index).show();
-      buttons.get(index).setColorBackground(color(255, 0,0));
+      buttons.get(index).setColorBackground(color(85.88));
 
     }
     
@@ -240,32 +245,40 @@ public class ControlFrame extends PApplet {
   void hideAll(){
     for( Integer i=0; i<12; i++){
         groups.get(i).hide();
-        buttons.get(i).setColorBackground(color(255, 100,0));
+        buttons.get(i).setColorBackground(color(85.88));
     }
   }
   
   
   void setColorList(){
     colorList = new IntList();
+    colorList.append(#FF0000); //red
+    colorList.append(#FF7F00); //orange
+    colorList.append(#FFFF00); //yellow
+    colorList.append(#00FF00); //GREEN
+    colorList.append(#0000FF); //BLUE
+    colorList.append(color(39,0,51)); //indigo
+    colorList.append(#720b98);  //chinese purple
+    colorList.append(#00ab7a);  //green cyan
+    colorList.append(#ffcff1);  //pink
+    colorList.append(#f64a8a);  // french rose
+    colorList.append(#849318);  //yellow green
+    colorList.append(#986c13);  //yellow brown
+    
+    
     colorList.append(#b19cd9);  // pastel purple
-    colorList.append(#bfbfbf); //Gray
-    colorList.append(#ffffff); //White
     colorList.append(#cbbe88); //Inverted 
     colorList.append(#7eb6ff); // Parakeet light Blue
     
     colorList.append(#327932); // green
-    colorList.append(#e62020); //Lust orange
-    colorList.append(#849318);  //yellow green
     colorList.append(#653a71);  //purple
-    colorList.append(#986c13);  //yellow brown
     
-    colorList.append(#00ab7a);  //green cyan
+    
+    
     colorList.append(#884323);  //red brown
     colorList.append(#cccc00);  //darker yellow
-    colorList.append(#ffcff1);  //pink
-    colorList.append(#f64a8a);  // french rose
     
-    colorList.append(#720b98);  //chinese purple
+    
     colorList.append(#fb4d46);  //Tart orange
     colorList.append(#fd7657);  //light red
     colorList.append(#e9ffdb);  //Nyanza
