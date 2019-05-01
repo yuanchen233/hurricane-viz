@@ -12,6 +12,8 @@ BarChart barChart;
 BarChart barChart1;
 PFont titleFont,smallFont;
 boolean toggleValue;
+boolean toggle;
+PImage img;
 PFont myFont1;
 PFont myFont2;
 int displayMode = 1;
@@ -68,7 +70,6 @@ void setup() {
   barChart1.setMaxValue(200);
   barChart1.showValueAxis(true); 
   barChart1.showCategoryAxis(true); 
-
   
   // ================== Set up Map ========================
   
@@ -174,6 +175,8 @@ void setup() {
   
   
   
+   //=====================NOAA graph as support===================
+  img = loadImage("HurrStats.png");
 
 
 } // end set-up
@@ -196,9 +199,9 @@ void draw() {
   background(0);  // Ocean colour
   
   toggleValue = cf.getToggleValue();
+  toggle = cf.getToggleValueImage();
     //====================Swtich button=============
    //probably we can insert a graph or something for this
-
    pushMatrix();
   if(toggleValue){
       
@@ -225,9 +228,18 @@ void draw() {
 
       
   }
+  
+  if(toggle){
+
+      translate(50,30); // the location for graph to pop out
+      //insert graph here
+      background(255);
+      image(img,0,0,width-20,height-50);
+      textAlign(LEFT,BOTTOM);
+      text("Data graph from gfdl.noaa.",10,height);
+  }
   popMatrix();
 
- 
     //Anthing we don't want to zoom should be placed above
     //==================zoom ========================
   translate(xo,yo);
@@ -237,8 +249,8 @@ void draw() {
   // ================== Draw Map ========================
 
   stroke(220);              // Boundary colour
-  if(!toggleValue){
-strokeWeight(1);
+  if(!toggleValue &!toggle){       // if toggle is off 
+ strokeWeight(1);
   // Draw entire world map.
   fill(180);        // Land colour
   geoMap.draw();              // Draw the entire map.
@@ -251,6 +263,9 @@ strokeWeight(1);
     geoMap.draw(id);
   }
   */
+      textAlign(LEFT,BOTTOM);
+      text("Hold UP or DOWN on keyboard or using mouse scrolling to zoom. Press LEFT to reset view. Press Right to view the whole map."
+      ,10,height);
   // ================== Draw Hurr ========================
 float x,y;
 

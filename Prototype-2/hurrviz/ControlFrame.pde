@@ -6,7 +6,9 @@ public class ControlFrame extends PApplet {
   PApplet parent;
   ControlP5 cp5;
   ListBox l;
-  Toggle s, s2;
+  Toggle s;
+  Toggle simage;
+  boolean toggle = false;
   boolean toggleValue = false;
   CheckBox checkbox,checkbox2;
   int myColorBackground;
@@ -181,14 +183,25 @@ public class ControlFrame extends PApplet {
   s = cp5.addToggle("toggleValue")
      .setPosition(10,30)
      .setSize(100,30)
-     .setWidth(width)
+     .setWidth(200)
      .setMode(ControlP5.SWITCH)
      ;
   s.getCaptionLabel().set("Show Me the Graph");
   s.getCaptionLabel().setSize(20);
+
+  
+  //======================toggle for NOAA graph====================
+   
+
+  simage = cp5.addToggle("toggle")
+     .setPosition(250,30)
+     .setSize(100,30)
+     .setWidth(150)
+     .setMode(ControlP5.SWITCH)
+     ;
+  simage.getCaptionLabel().set("NOAA graph");
+  simage.getCaptionLabel().setSize(20);
   cp5.end();
-  
-  
   
   
   }
@@ -197,9 +210,14 @@ public class ControlFrame extends PApplet {
     background(0);
   }
   //switch button value
+    
+  boolean getToggleValueImage(){
+    return toggle;
+  }
   boolean getToggleValue(){
     return toggleValue;
   }
+
   
  
   //event triggers when open
@@ -241,6 +259,7 @@ public class ControlFrame extends PApplet {
     println("got something from a controller "
             +theEvent.getController().getName()
             );
+            
   }
   
   if (theEvent.isFrom(checkbox)) {
