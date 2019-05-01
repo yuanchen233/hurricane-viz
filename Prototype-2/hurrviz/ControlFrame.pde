@@ -13,7 +13,12 @@ public class ControlFrame extends PApplet {
   CheckBox checkbox,checkbox2;
   int myColorBackground;
   IntList colorList;
-
+  List<Group> groups = new ArrayList<Group>();
+  List<Button> buttons = new ArrayList<Button>();
+  
+  
+  
+  
   public ControlFrame(PApplet _parent, int _w, int _h, String _name) {
     super();  
     parent = _parent;
@@ -24,8 +29,7 @@ public class ControlFrame extends PApplet {
   }
   
   public Integer get_color(int i) {
-    if (i >= 0){ return colorList.get(i); }
-    return 0;
+    return colorList.get(i);
   }
   
   public void settings() {
@@ -37,157 +41,57 @@ public class ControlFrame extends PApplet {
   noStroke();
   cp5 = new ControlP5(this);
   setColorList();
-
-  /*
-  //===================== test =======================
-  Group gtest = cp5.addGroup("gtest")
-                .setPosition(160,240)
-                .setSize(200,300)
-                .setBarHeight(30)
-                .setColorBackground(color(255, 0,0))
-                .setColorActive(color(0))
-                .setColorForeground(color(0,102,204))
-                ;
-  gtest.getCaptionLabel().set("Test");
-  gtest.getCaptionLabel().setSize(20);
-
-
-   for(int i = 0; i< 9;i++){
-   int num = colorList.get(i);
-   checkbox = cp5.addCheckBox("checkBox"+i)
-               .setPosition(110,(-70+i*30))
-               .setSize(100,20)
-               .setSpacingColumn(60)
-               .setItemsPerRow(2)
-               .setColorLabel(num)
-               .setColorBackground(color(0xffff8800))
-               .setColorForeground(color(0,102,204))
-               ;
-    checkbox.setGroup(gtest);
-    String sd = nfs(i,2).replaceAll("\\s","");
-    checkbox.addItem("20"+sd, i);
-  }
   
-  */
-  //===================== end test =======================
-
-
-
 
 //===================== List of decades =======================
-  List<Group> groups = new ArrayList<Group>();
+
 
   for( Integer i=0; i<12; i++){
     Integer year = (1900 + i*10);
-    Integer year2 = (1910 + i*10);
-    Group group = cp5.addGroup("g"+i.toString())
-                .setPosition(10,150+i*50)
-                .setSize(200,500)
-                .setBarHeight(40)
+    Integer year2 = (1909 + i*10);
+    Integer name = (190 + i*1);
+    Group group = cp5.addGroup(name.toString())
+                .setPosition(10,200)
+                .hide()
+                .setBarHeight(0);
+    group.getCaptionLabel().set( "" );
+    groups.add(group);
+    
+    String bname = nfs(i,2).replaceAll("\\s","");
+    Button but = cp5.addButton("b"+bname)
+                .setPosition(10,150+i*55)
+                .setSize(200,40)
                 .setColorBackground(color(255, 100,0))
                 .setColorActive(color(0))
                 .setColorForeground(color(0,102,204))
                 ;
-    group.getCaptionLabel().set("Hurricance "+year.toString() + "-" + year2.toString() );
-    group.getCaptionLabel().setSize(19);
-    groups.add(group);
+    but.getCaptionLabel().set("Hurricance "+year.toString() + "-" + year2.toString() );
+    but.getCaptionLabel().setSize(19);
+    buttons.add(but);
   }
   
-  
-  
-   for(int i = 0; i< 9;i++){
-     int num = colorList.get(i);
-     checkbox = cp5.addCheckBox("checkBox"+i)
-                 .setPosition(220,(-30+i*30))
-                 .setSize(100,20)
-                 .setSpacingColumn(60)
-                 .setItemsPerRow(2)
-                 .setColorLabel(num)
-                 .setColorBackground(color(0xffff8800))
-                 .setColorForeground(color(0,102,204))
-                 ;
-      checkbox.setGroup(groups.get(0));
-      String sd = nfs(i,2).replaceAll("\\s","");
-      checkbox.addItem("20"+sd, i);
-    }
-  
-  
-  
-  
-  
-  
-  
+  //===================== List of years =======================
 
- /* 
-  //=====================checkbox for 2001-2018=======================
-   for(int i = 0; i<19;i++){
-   int num = colorList.get(i);
-   checkbox = cp5.addCheckBox("checkBox"+i)
-               .setPosition(210,(-70+i*30))
-               .setSize(100,20)
-               .setSpacingColumn(60)
-               .setItemsPerRow(2)
-               .setColorLabel(num)
-               .setColorBackground(color(0xffff8800))
-               .setColorForeground(color(0,102,204))
-               ;
-    String sd = nfs(i,2).replaceAll("\\s","");
-    checkbox.addItem("20"+sd, i);
-    if(i>10){
-    checkbox.setGroup(g2);
-    }else{
-    checkbox.setGroup(g2);
+  
+  for (Group g : groups){
+    String name = g.getName();
+    for(int i = 0; i< 10;i++){
+      int num = colorList.get(i);
+      String name2 = nfs(i,1).replaceAll("\\s","");
+      checkbox = cp5.addCheckBox("c"+name+i)
+                  .setPosition(220,(-30+i*40))
+                  .setSize(65,30)
+                  .setSpacingColumn(60)
+                  .setItemsPerRow(2)
+                  .setColorLabel(num)
+                  .setColorBackground(color(150))
+                  .setColorForeground(color(200,10,10))
+                  .setColorActive(color(num));
+      checkbox.setGroup(g);
+      
+      checkbox.addItem(name+name2, i);
     }
-
-             }
-
-  //=====================checkbox for 1901-2000=======================
-   for(int i = 0; i<99;i++){
-   int num = colorList.get(0);
-   checkbox2 = cp5.addCheckBox("checkBox2"+i)
-               .setPosition(10,(i*30))
-               .setSize(50,20)
-               .setSpacingColumn(60)
-               .setColorLabel(num)
-               .setColorBackground(color(0xffff8800))
-               .setColorForeground(color(0,102,204))
-               ;
-
-    String sd = nfs(i,2).replaceAll("\\s","");
-    checkbox2.addItem("19"+sd, i);
-    if(0<i<10){
-        checkbox2.setGroup(g2);
-    }else if(10<i<20){
-          checkbox2.setGroup(g3);
-    }else if(20<i<30){
-          checkbox2.setGroup(g4);
-    }else if(30<i<40){
-          checkbox2.setGroup(g5);
-    }else if(40<i<50){
-          checkbox2.setGroup(g6);
-    }else if(50<i<60){
-          checkbox2.setGroup(g7);
-    }else if(60<i<70){
-          checkbox2.setGroup(g8);
-    }else if(70<i<80){
-          checkbox2.setGroup(g9);
-    }else if(80<i<90){
-          checkbox2.setGroup(g10);
-    }else if(90<i<99){
-          checkbox2.setGroup(g11);
-    }
-    
-    
-   if(i>25){
-      checkbox2.setPosition(110,i*30-26*30);
-    }else if(i>50){
-      checkbox2.setPosition(210,i*30-26*30);
-    }else if(i>75){
-      checkbox2.setPosition(260,i*30-26*30);
-    }
-    
   }
-*/
 
    // ==================== Switch button ======================
   cp5.begin();
@@ -237,30 +141,27 @@ public class ControlFrame extends PApplet {
   String temp;
   int year = 0;
   if(theEvent.isGroup()) {
-     /* println("got an event from group "
-            +theEvent.getGroup().getName()
-            +", isOpen? "+theEvent.getGroup().isOpen()
-            );
-           */
-           
-    //println(checkbox.getArrayValue());
     
     temp = theEvent.getGroup().getName();
+    temp = temp.substring(1,(temp.length()));
+    
+    
     char c_tens = (temp.charAt(temp.length() - 2));
     char c = (temp.charAt(temp.length() - 1));
     
-    if (Character.isDigit(c_tens)){
-      year += 10;
-      println(1000);
-    }
     
-    year += Character.getNumericValue(c);
     
+    //TODO: change this
+
+    
+    year = Character.getNumericValue(c);
+    //year +=  + Character.getNumericValue(c_tens) * 10;
 
   if(theEvent.getGroup().getArrayValue()[0] == 1) {
         theEvent.getGroup().setArrayValue(0,0);
         add_year(year+2000);
-
+        print("add year", year);
+        
       } else {
         remove_year(year + 2000);
         theEvent.getGroup().setArrayValue(0,1);
@@ -268,10 +169,28 @@ public class ControlFrame extends PApplet {
     
     
   } else if (theEvent.isController()){
+    
+    
     println("got something from a controller "
             +theEvent.getController().getName()
             );
             
+            
+    char c = theEvent.getController().getName().charAt(theEvent.getController().getName().length() - 1);
+    char c2 = theEvent.getController().getName().charAt(theEvent.getController().getName().length() - 2);
+    Integer index = Character.getNumericValue(c) + Character.getNumericValue(c2) * 10;
+
+    if(groups.get(index).isVisible()) {
+      groups.get(index).hide();
+      buttons.get(index).setColorBackground(color(255, 100,0));
+    }
+    else {
+      hideAll();
+      groups.get(index).show();
+      buttons.get(index).setColorBackground(color(255, 0,0));
+
+    }
+    
   }
   
   if (theEvent.isFrom(checkbox)) {
@@ -318,7 +237,14 @@ public class ControlFrame extends PApplet {
 
   }
 
-
+  void hideAll(){
+    for( Integer i=0; i<12; i++){
+        groups.get(i).hide();
+        buttons.get(i).setColorBackground(color(255, 100,0));
+    }
+  }
+  
+  
   void setColorList(){
     colorList = new IntList();
     colorList.append(#b19cd9);  // pastel purple

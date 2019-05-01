@@ -142,6 +142,7 @@ void setup() {
       new_hurr.name = name;
       new_hurr.track = new Table();
       new_hurr.year = get_year(year_str);
+      new_hurr.level = 3;
       hurs2.add(new_hurr);
 
     } else {
@@ -277,12 +278,10 @@ List<Integer> t_years = new ArrayList<Integer>(years);
   noFill();
     for (int this_year:t_years){
       for(Hurricane temp: hurs){
-    
-//println(this_year - 2002);
-          stroke(cf.get_color(this_year-2001),170);
+
+          stroke(cf.get_color(this_year-2000),170);
           strokeWeight(0.7+temp.level/8.0);
 
-         
         last = temp.points.length-1;
         beginShape();
         for (int i = 0; i < last; i+=1){
