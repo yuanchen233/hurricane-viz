@@ -14,7 +14,7 @@ void setup() {
   Table track = loadTable("hurdat3.csv");
   int num = track.getRowCount();
   
-  for (int k = 0; k < 500;k++){
+  for (int k = 0; k < num;k++){
     
     String name = track.getString(0,1).replaceAll("\\s","");
     
@@ -65,9 +65,9 @@ void draw() {
 
   
 
-int last;
-float x,y;
-int this_year = 1851;
+  int last;
+  float x,y;
+  int this_year = 2009;
 
 
       for(Hurricane temp: hurs2){
@@ -81,10 +81,10 @@ int this_year = 1851;
             //println(track_points[i].x,track_points[i].y);
               x = temp.points[i].x;
               y = temp.points[i].y;
-              //println(x,y);
+             
               x = (180-x)*width/360;
               y = (85-y) * height/180;
-              
+               println(x,y);
               if(temp.getYear() == this_year){
                 curveVertex(x,y);
               }
