@@ -30,8 +30,12 @@ public class ControlFrame extends PApplet {
   
   public Integer get_color(int i) {
     i = i-1900;
-    i = i / 10;
-    return colorList.get(i);
+    int j = i / 10;
+    float k = i - j * 10;
+    k = k / 13.0;
+    
+    //return lerpColor(colorList.get(j) , color(255),k);
+    return colorList.get(j);
   }
   
   public void settings() {

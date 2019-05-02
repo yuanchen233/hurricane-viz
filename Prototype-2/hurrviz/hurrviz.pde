@@ -278,7 +278,17 @@ List<Integer> t_years = new ArrayList<Integer>(years);
     for (int this_year:t_years){
       for(Hurricane temp: hurs2){
 
-          stroke(cf.get_color(this_year),170);
+          //stroke(cf.get_color(this_year),170);
+          
+            int t1 = this_year - 1900;
+            int j = t1 / 10;
+            float k = t1 - j * 10;
+            k = k / 15.0;
+            stroke( lerpColor(cf.get_color(this_year) , color(255),k), 170);
+          
+          
+          
+          
           strokeWeight(0.7+temp.level/8.0);
 
         last = temp.points.length-1;
