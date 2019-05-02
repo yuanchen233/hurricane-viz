@@ -6,7 +6,7 @@ import java.util.ArrayList;
 List<Hurricane> hurs2 = new ArrayList<Hurricane>();
 
 void settings() {
-  size(1000,800);
+  size(1500,1000);
 }
 
 void setup() {
@@ -34,9 +34,8 @@ void setup() {
     
     track.removeRow(0);
   }
- 
-  for(Hurricane temp: hurs2){
 
+  for(Hurricane temp: hurs2){
     String strX, strY;
     float x, y;
     PVector[] points = new PVector[temp.track.getRowCount()];
@@ -46,13 +45,12 @@ void setup() {
       
       strX = temp.track.getString(i, 4);
       strY = temp.track.getString(i, 5);
-      x = Float.parseFloat(strX.substring(0,(strX.length()-1)));
-      y = Float.parseFloat(strY.substring(0,(strY.length()-1)));
+      y = Float.parseFloat(strX.substring(0,(strX.length()-1)));
+      x = Float.parseFloat(strY.substring(0,(strY.length()-1)));
       //print(x,y);
               
         points[i] = new PVector(x,  y);
 
-              
       }
     temp.points = points;
   }
@@ -63,37 +61,45 @@ void draw() {
   background(0);  // Ocean colour
   stroke(250);              // Boundary colour
 
-  
-
+  noLoop();
+noFill();
   int last;
   float x,y;
-  int this_year = 2009;
+  int this_year = 1851;
 
 
       for(Hurricane temp: hurs2){
     
     
         last = temp.points.length;
-        println(last);
+        //println(last);
         beginShape();
         for (int i = 0; i < last; i+=1){
           if (temp.points[i] != null) {
             //println(track_points[i].x,track_points[i].y);
               x = temp.points[i].x;
               y = temp.points[i].y;
-             
               x = (180-x)*width/360;
               y = (85-y) * height/180;
-               println(x,y);
-              if(temp.getYear() == this_year){
+               //println("curveVertex(",x*2-400,',',y*2-400,");");
+                
+
                 curveVertex(x,y);
-              }
+              
           }
         }
         endShape();
 
       }
 }
+
+
+
+
+
+
+
+
 
 int get_year(String year_str){
 

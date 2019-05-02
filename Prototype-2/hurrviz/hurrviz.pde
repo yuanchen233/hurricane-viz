@@ -130,7 +130,7 @@ void setup() {
   Table track = loadTable("data/hurdat3.csv");
   int num = track.getRowCount();
   
-  for (int k = 0; k < 500;k++){
+  for (int k = 0; k < num;k++){
     
     String name = track.getString(0,1).replaceAll("\\s","");
     
@@ -151,7 +151,7 @@ void setup() {
     
     track.removeRow(0);
   }
- 
+
   for(Hurricane temp: hurs2){
 
     String strX, strY;
@@ -163,13 +163,12 @@ void setup() {
       
       strX = temp.track.getString(i, 4);
       strY = temp.track.getString(i, 5);
-      x = Float.parseFloat(strX.substring(0,(strX.length()-1)));
-      y = Float.parseFloat(strY.substring(0,(strY.length()-1)));
+      y = Float.parseFloat(strX.substring(0,(strX.length()-1)));
+      x = Float.parseFloat(strY.substring(0,(strY.length()-1)));
       //print(x,y);
               
         points[i] = new PVector(x,  y);
 
-              
       }
     temp.points = points;
   }
@@ -277,9 +276,9 @@ List<Integer> t_years = new ArrayList<Integer>(years);
 
   noFill();
     for (int this_year:t_years){
-      for(Hurricane temp: hurs){
+      for(Hurricane temp: hurs2){
 
-          stroke(cf.get_color(this_year-2000),170);
+          stroke(cf.get_color(this_year),170);
           strokeWeight(0.7+temp.level/8.0);
 
         last = temp.points.length-1;

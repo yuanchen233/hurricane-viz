@@ -29,6 +29,8 @@ public class ControlFrame extends PApplet {
   }
   
   public Integer get_color(int i) {
+    i = i-1900;
+    i = i / 10;
     return colorList.get(i);
   }
   
@@ -150,25 +152,20 @@ public class ControlFrame extends PApplet {
     temp = theEvent.getGroup().getName();
     temp = temp.substring(1,(temp.length()));
     
-    
-    char c_tens = (temp.charAt(temp.length() - 2));
-    char c = (temp.charAt(temp.length() - 1));
-    
-    
-    
+
     //TODO: change this
 
     
-    year = Character.getNumericValue(c);
+    year = Integer.parseInt(temp); 
     //year +=  + Character.getNumericValue(c_tens) * 10;
 
   if(theEvent.getGroup().getArrayValue()[0] == 1) {
         theEvent.getGroup().setArrayValue(0,0);
-        add_year(year+2000);
-        print("add year", year);
+        add_year(year);
+        //println("add year", year);
         
       } else {
-        remove_year(year + 2000);
+        remove_year(year);
         theEvent.getGroup().setArrayValue(0,1);
       }
     
