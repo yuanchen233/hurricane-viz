@@ -16,9 +16,7 @@ public class ControlFrame extends PApplet {
   List<Group> groups = new ArrayList<Group>();
   List<Button> buttons = new ArrayList<Button>();
   
-  
-  
-  
+
   public ControlFrame(PApplet _parent, int _w, int _h, String _name) {
     super();  
     parent = _parent;
@@ -88,16 +86,20 @@ public class ControlFrame extends PApplet {
     String name = g.getName();
     for(int i = 0; i< 10;i++){
       int num = colorList.get(i);
+      int m = groups.indexOf(g);
+      float lerpAmount = i/15.0;
+      color fc = lerpColor(colorList.get(m), color(255),lerpAmount);
+      
       String name2 = nfs(i,1).replaceAll("\\s","");
       checkbox = cp5.addCheckBox("c"+name+i)
                   .setPosition(220,(-30+i*40))
                   .setSize(65,30)
                   .setSpacingColumn(60)
                   .setItemsPerRow(2)
-                  .setColorLabel(num)
+                  .setColorLabel(fc)
                   .setColorBackground(color(150))
                   .setColorForeground(color(200,10,10))
-                  .setColorActive(color(num));
+                  .setColorActive(color(fc));
       checkbox.setGroup(g);
       
       checkbox.addItem(name+name2, i);
@@ -177,7 +179,7 @@ public class ControlFrame extends PApplet {
   } else if (theEvent.isController()){
     
     
-    println("got something from a controller "
+    println("hit controller "
             +theEvent.getController().getName()
             );
             
@@ -205,11 +207,6 @@ public class ControlFrame extends PApplet {
     myColorBackground = 170;
    /* 
     print("got an event from "+checkbox.getName()+"\t\n");
-    // checkbox uses arrayValue to store the state of 
-    // individual checkbox-items. usage:
-    println(checkbox.getArrayValue());
-    
-    
      */ 
     for (int i=0;i<checkbox.getArrayValue().length;i++) {
       int n = (int)checkbox.getArrayValue()[i];
@@ -258,7 +255,7 @@ public class ControlFrame extends PApplet {
     colorList.append(#FFFF00); //yellow
     colorList.append(#00FF00); //GREEN
     colorList.append(#0000FF); //BLUE
-    colorList.append(color(39,0,51)); //indigo
+
     colorList.append(#720b98);  //chinese purple
     colorList.append(#00ab7a);  //green cyan
     colorList.append(#ffcff1);  //pink
@@ -273,13 +270,9 @@ public class ControlFrame extends PApplet {
     
     colorList.append(#327932); // green
     colorList.append(#653a71);  //purple
-    
-    
-    
     colorList.append(#884323);  //red brown
     colorList.append(#cccc00);  //darker yellow
-    
-    
+
     colorList.append(#fb4d46);  //Tart orange
     colorList.append(#fd7657);  //light red
     colorList.append(#e9ffdb);  //Nyanza
