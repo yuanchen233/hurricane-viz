@@ -135,14 +135,17 @@ void setup() {
     String name = track.getString(0,1).replaceAll("\\s","");
     
     String year_str = track.getString(0,0);
-    int isYear = track.getInt(0,0);  
-    if(isYear == 0){
+    int isYear = track.getInt(0,0);
       
+    if(isYear == 0){
+      int level = track.getInt(0,4);
       Hurricane new_hurr = new Hurricane();
       new_hurr.name = name;
       new_hurr.track = new Table();
       new_hurr.year = get_year(year_str);
-      new_hurr.level = 3;
+      if (level == 0) {new_hurr.level = 1;}
+      else {new_hurr.level = level;}
+      
       hurs2.add(new_hurr);
 
     } else {
@@ -225,10 +228,9 @@ void draw() {
       ellipse(240,55+textHeight,16,16);
       fill(200,70,70,130);
       ellipse(240,75+textHeight,16,16);
-
-      
   }
-  
+
+
   if(toggle){
 
       translate(50,30); // the location for graph to pop out
@@ -283,7 +285,9 @@ List<Integer> t_years = new ArrayList<Integer>(years);
         float k = t1 - j * 10;
         k = k / 15.0;
         stroke( lerpColor(cf.get_color(this_year) , color(255),k), 170);
-        strokeWeight(0.7+temp.level/8.0);
+        float weight = temp.level*temp.level/22.0;
+        if (weight < 0.1) {weight = 0.1;}
+        strokeWeight(weight);
 
         last = temp.points.length-1;
         
