@@ -15,7 +15,7 @@ public class ControlFrame extends PApplet {
   IntList colorList;
   List<Group> groups = new ArrayList<Group>();
   List<Button> buttons = new ArrayList<Button>();
-  
+  List<CheckBox> boxes = new ArrayList<CheckBox>();
 
   public ControlFrame(PApplet _parent, int _w, int _h, String _name) {
     super();  
@@ -79,6 +79,20 @@ public class ControlFrame extends PApplet {
     buttons.add(but);
   }
   
+    Button clear = cp5.addButton("clear")
+                .setPosition(200,height-100)
+                .setSize(200,40)
+                .setColorBackground(color(71.37))
+                .setColorActive(color(85.88))
+                .setColorForeground(color(85.88))
+                ;
+    clear.getCaptionLabel().set("Clear All ");
+    clear.getCaptionLabel().setSize(19);
+    clear.getCaptionLabel().setColor(color(250,0,0));
+
+
+  
+  
   //===================== List of years =======================
 
   
@@ -103,6 +117,8 @@ public class ControlFrame extends PApplet {
       checkbox.setGroup(g);
       
       checkbox.addItem(name+name2, i);
+      
+      boxes.add(checkbox);
     }
   }
 
@@ -178,11 +194,15 @@ public class ControlFrame extends PApplet {
     
   } else if (theEvent.isController()){
     
+    if (theEvent.getController().getName() == "clear"){
+      for (CheckBox c : boxes){
+          c.deactivateAll();
+          
+      }
+      return ;
+    }
     
-    println("hit controller "
-            +theEvent.getController().getName()
-            );
-            
+              
             
     char c = theEvent.getController().getName().charAt(theEvent.getController().getName().length() - 1);
     char c2 = theEvent.getController().getName().charAt(theEvent.getController().getName().length() - 2);
