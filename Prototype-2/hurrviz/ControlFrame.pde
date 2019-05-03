@@ -88,7 +88,7 @@ public class ControlFrame extends PApplet {
                 ;
     clear.getCaptionLabel().set("Clear All ");
     clear.getCaptionLabel().setSize(19);
-    clear.getCaptionLabel().setColor(color(250,0,0));
+    clear.getCaptionLabel().setColor(color(#FFFFFF));
 
 
   
