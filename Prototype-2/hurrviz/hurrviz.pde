@@ -6,29 +6,32 @@ import java.util.List;
 import java.util.ArrayList;
 
 ControlFrame cf;
-ControlP5 cp5;
-
 BarChart barChart;
 BarChart barChart1;
 PFont titleFont,smallFont;
 boolean toggleValue;
 boolean toggle;
 PImage img;
-PFont myFont1;
-PFont myFont2;
-int displayMode = 1;
-float lerpAmount = 0;
-boolean lerpit = true;
-int last;
-int factor = 5;
-String[] filenames;
-List<Hurricane> hurs = new ArrayList<Hurricane>();
-List<Hurricane> hurs2 = new ArrayList<Hurricane>();
-String path;
+
 GeoMap geoMap;
 float xo,yo;
 float zoom = 6;
 List<Integer> years = new ArrayList<Integer>();
+List<Hurricane> hurs2 = new ArrayList<Hurricane>();
+
+//ControlP5 cp5;
+//PFont myFont1;
+//PFont myFont2;
+//int displayMode = 1;
+//float lerpAmount = 0;
+//boolean lerpit = true;
+//int last;
+//int factor = 5;
+//String[] filenames;
+//List<Hurricane> hurs = new ArrayList<Hurricane>();
+//String path;
+
+
 
 void settings() {
   //fullScreen();
@@ -84,13 +87,12 @@ void setup() {
   noStroke();
 
   // ================== Read File ========================
-  
+  /*
   path = sketchPath()+"/data/HurricaneData";
   filenames = listFileNames(path);
-  //printArray( filenames);
 
   // ================== Load recent H ========================
-  int t = 0;
+
   PVector[] track_points;
 
   for(String str:filenames){
@@ -118,10 +120,10 @@ void setup() {
       }
       new_hurr.points = track_points;
       hurs.add( new_hurr );
-      ++t;
     } // end if
   } // end for
   
+*/
   
     // ================== Load more H ========================
   
@@ -156,7 +158,6 @@ void setup() {
   }
 
   for(Hurricane temp: hurs2){
-
     String strX, strY;
     float x, y;
     PVector[] points = new PVector[temp.track.getRowCount()];
@@ -252,22 +253,11 @@ void draw() {
 
   stroke(71.37);              // Boundary colour
   if(!toggleValue &!toggle){       // if toggle is off 
- strokeWeight(1);
-  // Draw entire world map.
+  strokeWeight(1);
+
   fill(85.88);        // Land colour
   geoMap.draw();              // Draw the entire map.
-/*
-  // Find the country at the mouse position and draw it in different colour.
-  int id = geoMap.getID(mouseX, mouseY);
-  if (id != -1)
-  {
-    fill(100);      // Highlighted land colour.
-    geoMap.draw(id);
-  }
-  */
-      textAlign(LEFT,BOTTOM);
-      text("Hold UP or DOWN on keyboard or using mouse scrolling to zoom. Press LEFT to reset view. Press Right to view the whole map."
-      ,10,height);
+
   // ================== Draw Hurr ========================
 float x,y;
 
@@ -279,33 +269,28 @@ List<Integer> t_years = new ArrayList<Integer>(years);
   noFill();
     for (int this_year:t_years){
       for(Hurricane temp: hurs2){
+        if(temp.getYear() == this_year){
+          int t1 = this_year - 1900;
+          int j = t1 / 10;
+          float k = t1 - j * 10;
+          k = k / 15.0;
+          stroke( lerpColor(cf.get_color(this_year) , color(255),k), 170);
+          float weight = temp.level*temp.level/22.0;
+          if (weight < 0.1) {weight = 0.1;}
+          strokeWeight(weight);
           
-        int t1 = this_year - 1900;
-        int j = t1 / 10;
-        float k = t1 - j * 10;
-        k = k / 15.0;
-        stroke( lerpColor(cf.get_color(this_year) , color(255),k), 170);
-        float weight = temp.level*temp.level/22.0;
-        if (weight < 0.1) {weight = 0.1;}
-        strokeWeight(weight);
-
-        last = temp.points.length-1;
-        
-        beginShape();
-        for (int i = 0; i < last; i+=1){
-          if (temp.points[i] != null) {
-            //println(track_points[i].x,track_points[i].y);
+          beginShape();
+          for (int i = 0; i < (temp.points.length-1); i+=1){
+            if (temp.points[i] != null) {
               x = temp.points[i].x;
               y = temp.points[i].y;
               x = (180-x)*width/360;
               y = (85-y) * height/180;
-              if(temp.getYear() == this_year){
-                curveVertex(x,y);
-              }
+              curveVertex(x,y);
+            }
           }
+          endShape();
         }
-        endShape();
-      
       }
     }
   }
@@ -336,20 +321,16 @@ void mouseWheel(MouseEvent event) {
 
 void add_year(int year){
   if (years.contains(year)){
-    //years.remove(year);
   } else {
     years.add(year);
   }
-
 }
 
 void remove_year(int year){
   int i = years.indexOf(year);
-  
   if (i != -1){
     years.remove(i);
   }
-
 }
 
 int get_year(String year_str){

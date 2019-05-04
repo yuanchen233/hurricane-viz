@@ -1,16 +1,15 @@
-//Control Panel
 
 public class ControlFrame extends PApplet {
 
   int w, h;
   PApplet parent;
   ControlP5 cp5;
-  ListBox l;
+  //ListBox l;
   Toggle s;
   Toggle simage;
   boolean toggle = false;
   boolean toggleValue = false;
-  CheckBox checkbox,checkbox2;
+  CheckBox checkbox;
   int myColorBackground;
   IntList colorList;
   List<Group> groups = new ArrayList<Group>();
@@ -90,8 +89,6 @@ public class ControlFrame extends PApplet {
     clear.getCaptionLabel().setSize(19);
     clear.getCaptionLabel().setColor(color(250,0,0));
 
-
-  
   
   //===================== List of years =======================
 
@@ -99,7 +96,7 @@ public class ControlFrame extends PApplet {
   for (Group g : groups){
     String name = g.getName();
     for(int i = 0; i< 10;i++){
-      int num = colorList.get(i);
+
       int m = groups.indexOf(g);
       float lerpAmount = i/15.0;
       color fc = lerpColor(colorList.get(m), color(255),lerpAmount);
@@ -242,7 +239,7 @@ public class ControlFrame extends PApplet {
     }
 
   }
-
+/*
   else if(theEvent.isFrom(checkbox2)){
      for (int i=0;i<checkbox.getArrayValue().length;i++) {
       int n = (int)checkbox.getArrayValue()[i];
@@ -257,7 +254,7 @@ public class ControlFrame extends PApplet {
       }
     }
   }
-
+*/
   }
 
   void hideAll(){
